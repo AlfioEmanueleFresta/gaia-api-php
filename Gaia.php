@@ -45,7 +45,8 @@ class Gaia {
     private
             $_gaia_sid  = null,
             $_args      = array(),
-            $errore     = false;
+            $errore     = false,
+            $_ver        = '1.1';
     
     public 
             $utente = null;
@@ -113,6 +114,7 @@ class Gaia {
         curl_setopt($ch, CURLOPT_URL, self::$_server . '/api.php?a=' . $azione);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_USERAGENT, "API {$this->_ver}: " . self::$_apikey );
         curl_setopt($ch, CURLOPT_POSTFIELDS, $this->_args);
         $output = curl_exec($ch);
         curl_close($ch);
