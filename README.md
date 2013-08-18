@@ -61,6 +61,38 @@ if ( $gaia->utente ) {
 ```
 
 
+### Ricerca di volontari o elenco completo
+
+```php
+
+$ricerca = $gaia->volontari_cerca (array( 
+    'query'     =>  '',     //  Vuoto   => Elenco completo
+                            //  Stringa => Ricerca
+    'perPagina' =>  30,
+    'pagina'    =>  1
+));
+
+echo "Trovati {$ricerca->totale} risultati in {$ricerca->tempo} secondi.\n";
+
+foreach ( $ricerca->risultati as $volontario ) {
+
+    echo "ID:           {$volontario->id}\n";
+    echo "Nome:         {$volontario->nome}\n";
+    echo "Cognome:      {$volontario->cognome}\n";
+    echo "Email:        {$volontario->email}\n";
+    echo "Cod.Fisc:     {$volontario->codiceFiscale}\n";
+    echo "Comitato ID:  {$volontario->comitato->id}\n";
+    echo "Comitato nome:{$volontario->comitato->nome}\n";
+    echo "---------------------------------------------\n\n";
+    
+}
+    
+```
+
+**Richiede login** - 
+La ricerca viene effettuata all'interno del comitato di appartenenza dell'utente identificato, più eventuali comitati di competenza (PRESIDENTE).
+
+
 ### Elenco e dettagli comitati, unità territoriali, coordinate, volontari, ecc.
 
 ```php
@@ -105,4 +137,5 @@ foreach ( $info as $nazionale ) {
 } // Fine elenco nazionali (teorico... un solo nazionale)
 
 ```
+
 
