@@ -34,7 +34,7 @@ class Gaia {
      */
     private static 
             // Indirizzo del server di Gaia
-            $_server = 'http://www.gaiacri.it',
+            $_server = 'https://www.gaiacri.it',
             // Eventuale codice delle API
             $_apikey = '1234567890abcdefgh';
     
@@ -46,7 +46,7 @@ class Gaia {
             $_gaia_sid  = null,
             $_args      = array(),
             $errore     = false,
-            $_ver        = '1.2';
+            $_ver        = '1.2.1';
     
     public 
             $utente = null;
