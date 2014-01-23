@@ -2,6 +2,8 @@
 
 Il progetto implementa una classe PHP per l'uso rapido delle API di Gaia.
 
+**ATTENZIONE - Dall'aggiornamento delle API di Gaia di gennaio 2014, questa libreria NON funziona piu'. Una nuova versione verra' rilasciata nel futuro - se risultera' di interesse del pubblico. In tal caso, per favore scrivete ad `api@gaia.cri.it`.***
+
 ## Requisiti
 
 * PHP versione 5.2+ 
