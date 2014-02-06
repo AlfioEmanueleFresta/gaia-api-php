@@ -34,8 +34,8 @@ class Gaia {
      */
     private static 
             // Indirizzo del server di Gaia
-            $_server = 'https://www.gaiacri.it',
-            // Eventuale codice delle API
+            $_server = 'https://gaia.cri.it',
+            // Codice applicazione per le API
             $_apikey = '1234567890abcdefgh';
     
     
@@ -46,7 +46,7 @@ class Gaia {
             $_gaia_sid  = null,
             $_args      = array(),
             $errore     = false,
-            $_ver        = '1.2.1';
+            $_ver        = '1.2.2';
     
     public 
             $utente = null;
@@ -58,9 +58,9 @@ class Gaia {
         if (!function_exists('curl_init')) {
             die('Gaia: Richiesto il modulo CURL (pacchetto php5-curl)');
         }
-        $this->__set('apikey',  self::$_apikey);
+        $this->__set('key',     self::$_apikey);
         $this->__set('sid',     $this->_gaia_sid);
-        $this->welcome();
+        $this->ciao();
     }
     
     /*
@@ -110,28 +110,30 @@ class Gaia {
             }
         }
         $this->__set('sid', $this->_gaia_sid);
+        $this->__set('key', self::$_apikey);
+        $this->__set('metodo', $azione);
         $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, self::$_server . '/api.php?a=' . $azione);
+        curl_setopt($ch, CURLOPT_URL, self::$_server . '/api.php');
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_POST, true);
         curl_setopt($ch, CURLOPT_USERAGENT, "API {$this->_ver}: " . self::$_apikey );
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $this->_args);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($this->_args));
         $output = curl_exec($ch);
         curl_close($ch);
         $output = json_decode($output);
         if ( !$output ) {
             die('Gaia: Errore del server.');
         }
-        $this->_gaia_sid = $output->session->id;
-        $this->__set('sid', $output->session->id);
+        $this->_gaia_sid = $output->sessione->id;
+        $this->__set('sid', $output->sessione->id);
         $this->setCookie();
-        $this->utente = $output->session->user;
-        if ( @$output->response->error ) {
-            $this->errore = $output->response->error;
+        $this->utente = $output->sessione->utente;
+        if ( @$output->risposta->errore ) {
+            $this->errore = $output->risposta->errore;
         } else {
             $this->errore = false;
         }
-        return $output->response;
+        return $output->risposta;
     }
             
 }
