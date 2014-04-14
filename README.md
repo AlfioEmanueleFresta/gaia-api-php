@@ -2,7 +2,6 @@
 
 Il progetto implementa una classe PHP per l'uso rapido delle API di Gaia.
 
-**ATTENZIONE - Dall'aggiornamento delle API di Gaia di gennaio 2014, questa libreria NON funziona piu'. Una nuova versione verra' rilasciata nel futuro - se risultera' di interesse del pubblico. In tal caso, per favore scrivete ad `api@gaia.cri.it`.***
 
 ## Requisiti
 
@@ -30,15 +29,13 @@ $gaia = new Gaia();
 ```php
 
 $risposta = $gaia->login (array(
-    'email'     =>  'indirizzo@email.it',
-    'password'  =>  'password'
+    // Imposta l'URL di ritorno dopo il login
+    'redirect'  =>  'http://www.miohost.it/torna_qui.php'
 ));
 
-if ( $risposta->login ) {
-    echo 'Login andato a buon fine!';
-} else {
-    echo 'Login non riuscito!';
-}
+// Redirect alla pagina di login
+header("Location: {$risposta->url}");
+exit(0);
 ```
 
 ### Controllo se sono loggato
