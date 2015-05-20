@@ -22,6 +22,18 @@ require_once 'Gaia.php';
 
 // 2. Mi connetto a Gaia:
 $gaia = new Gaia();
+
+// 3. Controllo se sono loggato
+if ( !$gaia->utente ) {
+  $risposta = $gaia->login([
+    'redirect'  =>  'http://www.miohost.it/questa_pagina.php'
+  ]);
+  // Redirect alla pagina di login
+  header("Location: {$risposta->url}");
+  exit(0);
+}
+
+// 4. Qui, utente identificato!
 ```
 
 ### Esempio di login
@@ -46,10 +58,14 @@ exit(0);
 
 if ( $gaia->utente ) {
 
-    echo "Benvenuto, ";
-    echo $gaia->utente->nome;
-    echo ". Codice utente: ";
-    echo $gaia->utente->id;
+    echo "Benvenuto, {$gaia->utente->nome}\n";
+   
+    // ID Utente: $gaia->utente->id;
+    
+    // Ottenimento anagrafica
+    $risposta = $gaia->io();
+    
+    echo "Codice fiscale: {$risposta->anagrafica->codiceFiscale}\n";
 
 } else {
 
